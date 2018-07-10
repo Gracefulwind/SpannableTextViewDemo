@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<declare-styleable name="SpannableTextView">-->
+        <!--<attr name="expandLines" format="integer" />-->
+        <!--<attr name="test1" format="boolean" />-->
+        <!--<attr name="test2" format="integer" />-->
+    <!--</declare-styleable>-->
+
+    <declare-styleable name="SimpleTestView">
+        <!--<attr name="expandLines" format="integer" />-->
+        <!--<attr name="text" format="string" />-->
+        <!--<attr name="textColor" format="color|reference" />-->
+        <!--<attr name="textSize" format="dimension" />-->
+        <!--<attr name="defaultIconWidth" format="dimension" />-->
+        <!--<attr name="defaultIconHeight" format="dimension" />-->
+        <!--<attr name="defaultIconMarginTop" format="dimension" />-->
+        <!--<attr name="defaultIconMarginRight" format="dimension" />-->
+        <!--<attr name="defaultIconMarginLeft" format="dimension" />-->
+        <!--<attr name="iconSrc" format="reference" />-->
+        <attr name="expand1" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="MessageState">
+        <attr name="state_message_unread" format="boolean"/>
+    </declare-styleable>
+
+</resources>

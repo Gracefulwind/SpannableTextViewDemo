@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="这是可伸缩带超链接tv的展示页面"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请输入文本"
+            />
+        <EditText
+            android:id="@+id/am_et_charseq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请输入文本"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请输入目标url,多个url以&quot;,&quot;分割"
+            />
+        <EditText
+            android:id="@+id/am_et_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入目标url"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <EditText
+                android:id="@+id/am_et_url_position"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="请插入url位置,多个位置以&quot;,&quot;分割"
+                />
+            <Button
+                android:id="@+id/am_btn_create_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="点击生成带超链接文本"
+                />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="文本原文："
+            />
+        <TextView
+            android:id="@+id/am_tv_source"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="下面是可伸缩带带urlTV:"
+            />
+        <com.wind.widget.spannable.SpannableTextView
+            android:id="@+id/am_stv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:expandLines="2"
+            app:text="这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456"
+            app:textSize="12sp"
+
+            />
+        <!--app:iconSrc="@drawable/selector_test"-->
+    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="尝试改变icon"
+        android:onClick="click1"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.wind.widget.spannable.SimpleTestView
+        android:id="@+id/am_simple_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.wind.widget.spannable.SimpleTestView>
+
+    <com.wind.widget.spannable.MessageListItemView
+        android:id="@+id/am_mliv_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.wind.widget.spannable.MessageListItemView>
+
+</LinearLayout>
