@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SpannableTextViewDemo</string>
+    <string name="testStr"><![CDATA[这是个测试123456这是个测试123456<a href=https://www.baidu.com>百度超链</a>这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456]]></string>
+    <string name="testStr1"><![CDATA[测试换str<a href=https://http://www.qq.com>腾讯超链</a>6这是个测试123456这是个测试123456]]></string>
 </resources>

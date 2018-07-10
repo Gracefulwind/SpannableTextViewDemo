@@ -78,11 +78,12 @@
             android:id="@+id/am_stv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:expandLines="2"
-            app:text="这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456这是个测试123456"
+            app:text="@string/testStr"
             app:textSize="12sp"
+            app:expandLines="3"
 
             />
+        <!--app:canExpand="false" testOK-->
         <!--app:iconSrc="@drawable/selector_test"-->
     </LinearLayout>
     <Button

@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="wrap_content">-2px</dimen>
+    <dimen name="match_parent">-1px</dimen>
+    <dimen name="dimen_0dp">0dp</dimen>
     <dimen name="dimen_3dp">3dp</dimen>
     <dimen name="dimen_4dp">4dp</dimen>
     <dimen name="dimen_6dp">6dp</dimen>
     <dimen name="dimen_12dp">12dp</dimen>
+    <dimen name="dimen_30dp">30dp</dimen>
+
+
+
+    <!--==========S==P==========-->
+
     <dimen name="dimen_12sp">12sp</dimen>
 
 </resources>
