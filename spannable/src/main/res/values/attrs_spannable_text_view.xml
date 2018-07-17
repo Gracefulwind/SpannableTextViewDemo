@@ -2,7 +2,10 @@
 <resources>
     <declare-styleable name="SpannableTextView">
         <attr name="iconSrc" format="reference" />
-        <attr name="expandLines" format="integer" />
+        <attr name="expandLines" format="integer|enum" >
+
+            <enum name="unlimited" value="2147483646"></enum>
+        </attr>
         <attr name="expand" format="boolean" />
         <attr name="canExpand" format="boolean" />
         <attr name="text" format="string" />

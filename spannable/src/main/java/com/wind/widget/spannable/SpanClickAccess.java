@@ -7,5 +7,5 @@ package com.wind.widget.spannable;
  * @author : Gracefulwind
  */
 public interface SpanClickAccess {
-    void setSpanClicked(boolean clicked);
+//    void setSpanClicked(boolean clicked);
 }

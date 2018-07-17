@@ -8,7 +8,9 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.3'
-        
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
+//        classpath 'com.novoda:bintray-release:0.8.1'
+        classpath "guru.stefma.bintrayrelease:bintrayrelease:1.0.0"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -25,3 +27,13 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+//ext {
+//    userOrg = 'gracefulwind'
+//    groupId = 'com.gracefulwind'
+////    uploadName = 'WDSimpleInject'
+//    publishVersion = '1.0.0'
+//    desc = 'A spannable textview with link can be managed by user '
+//    website = 'https://github.com/Gracefulwind/SpannableTextViewDemo'
+//    licences = ['Apache-2.0']
+//}

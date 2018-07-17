@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+//apply plugin: 'com.novoda.bintray-release'
+apply plugin: "guru.stefma.bintrayrelease"
 
 android {
     compileSdkVersion 27
@@ -31,4 +33,24 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+//publish {
+//    artifactId = 'SpannableTextView'
+//    uploadName = 'WD-SpannableTextView'
+//    userOrg = rootProject.userOrg
+//    groupId = rootProject.groupId
+//    publishVersion = rootProject.publishVersion
+//    desc = rootProject.description
+//    website = rootProject.website
+//    licences = rootProject.licences
+//}
+
+version = "1.0.0"
+group = "com.gracefulwind"
+publish {
+    userOrg = 'gracefulwind'
+    artifactId = 'SpannableTextView'
+    desc = 'A spannable textview with link can be managed by user'
+    website = 'https://github.com/Gracefulwind/SpannableTextViewDemo'
 }

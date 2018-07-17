@@ -20,7 +20,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -28,30 +27,40 @@ import android.widget.Toast;
  * Email : Gracefulwindbigwang@gmail.com
  *
  * @author : Gracefulwind
+ *
+ *  之前在工程中，TextView在限定了最大行数与超链接后，非展开情况下点击超链接视图会出现显示bug(出现文字上移半行现象，第一行只能看到半行，最底下多出半行)，
+ * 经研究发现是点击时触发了文字的高亮状态，重绘引起显示错误。而系统的LinkMoveMethod是可滑动的，所以虽然显示状态异常，但是可以通过滑动让文本完整显示出来。
+ * 这个和Spannable的目的是相冲突的，所以这里关闭了MoveMethod的高亮以及滑动功能。如果对于非可展的TV，可以用包内的SpannableNormalMovementMethod来实现高亮功能(
+ * 这里最好不要让此tv可scroll)
+ *
+ *
  */
 public class SpannableTextView extends FrameLayout{
 
 
     private static final int[] STATE_EXPAND = new int[]{R.attr.expand};
 
-    private LinkClickListener linkClickListener;
-//    private boolean linkClicked = false;
-    private int expandLines;
+    private Context mContext;
 
-    //never use anymore
+    private int expandLines;
+    private static final int EXPAND_LINES = Integer.MAX_VALUE;
+
+    //attrs
     private boolean expand = false;
-    private int contentHeight = 0;
-    private int expandHeight = 0;
-    private TextView tvContent;
+    private SpannableContentView tvContent;
     private ImageView ivExpandIcon;
     private int textColor;
     private String textText;
     private float textSize;
     private int iconSrc;
     private float dimenCommon;
+    private int linkColor;
+
     //默认可伸缩
     private boolean canExpand = true;
     private OnClickListener contentListener;
+
+    private LinkClickListener linkClickListener;
 
     public SpannableTextView(Context context) {
         this(context, null);
@@ -67,6 +76,7 @@ public class SpannableTextView extends FrameLayout{
     }
 
     private void initView(Context context, AttributeSet attrs) {
+        mContext = context;
         View inflate = LayoutInflater.from(context).inflate(layout(), this, true);
         tvContent = findViewById(R.id.stv_tv_content);
         ivExpandIcon = findViewById(R.id.stv_iv_expand_icon);
@@ -77,27 +87,23 @@ public class SpannableTextView extends FrameLayout{
         dimenCommon = context.getResources().getDimension(R.dimen.dimen_12sp);
         //==开始读取属性======
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SpannableTextView);
-        expandLines = typedArray.getInt(R.styleable.SpannableTextView_expandLines, Integer.MAX_VALUE);
+        //差一行，和MAX_LINE产生差异，让伸缩图标能正常变化
+        expandLines = typedArray.getInt(R.styleable.SpannableTextView_expandLines, Integer.MAX_VALUE - 1);
         textText = typedArray.getString(R.styleable.SpannableTextView_text);
         textColor = typedArray.getColor(R.styleable.SpannableTextView_textColor, Color.BLACK);
         textSize = typedArray.getDimension(R.styleable.SpannableTextView_textSize, dimenCommon);
+
+        linkColor = typedArray.getColor(R.styleable.SpannableTextView_textColor, getResources().getColor(R.color.color_default_link_text));
         //icon
         context.obtainStyledAttributes(attrs, R.styleable.SpannableTextView);
-//        int iconSrc = typedArray.getResourceId(R.styleable.SpannableTextView_iconSrc, R.drawable.selector_icon);
-//        Drawable drawable = context.getResources().getDrawable(iconSrc);
-//        ivExpandIcon.setImageDrawable(drawable);
-//        setIcon(iconSrc);
         expand = typedArray.getBoolean(R.styleable.SpannableTextView_expand, false);
         canExpand = typedArray.getBoolean(R.styleable.SpannableTextView_canExpand, true);
-        int iconSrc = typedArray.getResourceId(R.styleable.SpannableTextView_iconSrc, R.drawable.selector_icon);
+        iconSrc = typedArray.getResourceId(R.styleable.SpannableTextView_iconSrc, R.drawable.selector_icon);
         float xmlHeight = typedArray.getDimension(R.styleable.SpannableTextView_IconHeight, -5);
         float xmlWidth = typedArray.getDimension(R.styleable.SpannableTextView_IconWidth, -5);
         float xmlMarginLeft = typedArray.getDimension(R.styleable.SpannableTextView_IconMarginLeft, -5);
         float xmlMarginTop = typedArray.getDimension(R.styleable.SpannableTextView_IconMarginTop, -5);
         float xmlMarginRight = typedArray.getDimension(R.styleable.SpannableTextView_IconMarginRight, -5);
-//        int textSize0 = typedArray.getDimensionPixelOffset(R.styleable.SpannableTextView_textSize, 12);
-//        float textSize1 = typedArray.getDimension(R.styleable.SpannableTextView_textSize, 12);
-//        int textSize2 = typedArray.getDimensionPixelOffset(R.styleable.SpannableTextView_textSize, 12);
         typedArray.recycle();
         //=====
         //==设置右上图标====
@@ -107,7 +113,6 @@ public class SpannableTextView extends FrameLayout{
         //设置可点击文本
         setContextText();
         initListener();
-        System.out.println("=============");
     }
 
     private void initListener() {
@@ -124,12 +129,26 @@ public class SpannableTextView extends FrameLayout{
         });
     }
 
+    /**
+     *
+     * 就算在link高亮后调用这个方法，也只能控制控件高度，无法控制控件文本的显示情况。即使invalidate()也不行
+     * */
+    public void setExpandLines(int expandLines){
+        this.expandLines = expandLines;
+        int tempLines = tvContent.getMaxLines();
+        //展开模式下不改变当前显示状态
+        if(EXPAND_LINES == tempLines){
+            return;
+        }
+        tvContent.setMaxLines(expandLines);
+//        invalidate();
+    }
+
     private void changeExpandStatus() {
         int maxLines = tvContent.getMaxLines();
-        //todo:setExpandIcon
         if(maxLines == expandLines){
             expand = true;
-            tvContent.setMaxLines(Integer.MAX_VALUE);
+            tvContent.setMaxLines(EXPAND_LINES);
         }else {
             expand = false;
             tvContent.setMaxLines(expandLines);
@@ -150,6 +169,41 @@ public class SpannableTextView extends FrameLayout{
         }
     }
 
+    public void setLinkColor(int color){
+        linkColor = color;
+        tvContent.invalidate();
+    }
+
+//    ClickableSpan clickableSpan = new ClickableSpan() {
+//        @Override
+//        public void updateDrawState(TextPaint ds) {
+//            // super.updateDrawState(ds);
+//            ds.setUnderlineText(false); // 去除下划线
+//            ds.setColor(linkColor);
+//        }
+//
+//        @Override
+//        public void onClick(View view) {
+//            if(null != linkClickListener){
+//                boolean expended = linkClickListener.onLinkClicked(SpannableTextView.this, urlSpan);
+//                if(expended){
+//                    return;
+//                }
+//            }
+//            //默认操作，打开浏览器访问url
+//            try{
+//                String url = urlSpan.getURL();
+//                Uri uri = Uri.parse(url);
+//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                getContext().startActivity(intent);
+//            }catch (Exception excetion){
+//                excetion.printStackTrace();
+//                Toast.makeText(getContext(), "url异常，无法打开浏览器", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        }
+//    };
     /**
      *
      * 设置自定义伸缩图标的大小、位置。
@@ -216,6 +270,7 @@ public class SpannableTextView extends FrameLayout{
 //    }
 
     private void setIcon(int iconSrc) {
+        ivExpandIcon.setVisibility(canExpand ? VISIBLE : GONE);
         ivExpandIcon.setImageResource(iconSrc);
     }
 
@@ -224,7 +279,14 @@ public class SpannableTextView extends FrameLayout{
         return expand;
     }
 
+    public void setCanExpand(boolean canExpand) {
+        this.canExpand = canExpand;
+        setIcon(iconSrc);
+    }
 
+    public boolean isCanExpand() {
+        return canExpand;
+    }
 
     @Override
     protected int[] onCreateDrawableState(int extraSpace) {
@@ -296,14 +358,16 @@ public class SpannableTextView extends FrameLayout{
      * @see #setText(CharSequence)
      *
      * */
-    public void setText(CharSequence charSeq, LinkClickListener urlClickListener){
-        this.linkClickListener = urlClickListener;
+    public void setText(CharSequence charSeq, LinkClickListener linkClickListener){
+        this.linkClickListener = linkClickListener;
         setText(charSeq);
     }
 
     public void setText(CharSequence charSeq){
         tvContent.setText(getClickableHtml(charSeq));
-//        tvContent.setMovementMethod(SpannableLinkMovementMethod.getInstance());
+//        SpannableString text = (SpannableString) tvContent.getText();
+//        tvContent.setText(text);
+//        System.out.println("======");
     }
 
     /**
@@ -335,7 +399,7 @@ public class SpannableTextView extends FrameLayout{
             public void updateDrawState(TextPaint ds) {
                 // super.updateDrawState(ds);
                 ds.setUnderlineText(false); // 去除下划线
-                ds.setColor(Color.parseColor("#60a8ee"));
+                ds.setColor(linkColor);
             }
 
             @Override

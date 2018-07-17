@@ -8,91 +8,58 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/am_tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="这是可伸缩带超链接tv的展示页面"
+        android:text="@string/tv_test"
+        />
+    <com.wind.widget.spannable.SpannableTextView
+        android:id="@+id/am_stv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/testStr"
+        app:textSize="12sp"
+        app:expandLines="2"
+        app:canExpand="true"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         >
-        <TextView
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/am_btn_fun2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="请输入文本"
+            android:text="测试1"
             />
-        <EditText
-            android:id="@+id/am_et_charseq"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/am_btn_fun3"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="请输入文本"
+            android:text="测试2"
             />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="请输入目标url,多个url以&quot;,&quot;分割"
-            />
-        <EditText
-            android:id="@+id/am_et_url"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="请输入目标url"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <EditText
-                android:id="@+id/am_et_url_position"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="请插入url位置,多个位置以&quot;,&quot;分割"
-                />
-            <Button
-                android:id="@+id/am_btn_create_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="点击生成带超链接文本"
-                />
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="文本原文："
-            />
-        <TextView
-            android:id="@+id/am_tv_source"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="下面是可伸缩带带urlTV:"
-            />
-        <com.wind.widget.spannable.SpannableTextView
-            android:id="@+id/am_stv_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:text="@string/testStr"
-            app:textSize="12sp"
-            app:expandLines="3"
-
-            />
-        <!--app:canExpand="false" testOK-->
-        <!--app:iconSrc="@drawable/selector_test"-->
     </LinearLayout>
-    <Button
-        android:layout_width="wrap_content"
+
+    <com.chanven.lib.cptr.PtrClassicFrameLayout
+        android:id="@+id/am_pcf_refresh"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="尝试改变icon"
-        android:onClick="click1"
-        />
+        app:ptr_duration_to_close_header="500"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/am_rv_text_list"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+    </com.chanven.lib.cptr.PtrClassicFrameLayout>
+
+
     <TextView
+        android:id="@+id/am_tv_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
@@ -100,18 +67,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.wind.widget.spannable.SimpleTestView
-        android:id="@+id/am_simple_test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </com.wind.widget.spannable.SimpleTestView>
-
-    <com.wind.widget.spannable.MessageListItemView
-        android:id="@+id/am_mliv_test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </com.wind.widget.spannable.MessageListItemView>
 
 </LinearLayout>

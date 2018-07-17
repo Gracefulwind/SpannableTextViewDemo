@@ -6,7 +6,7 @@
     android:orientation="horizontal"
     android:duplicateParentState="true"
     >
-    <TextView
+    <com.wind.widget.spannable.SpannableContentView
         android:id="@+id/stv_tv_content"
         android:layout_width="0dp"
         android:layout_weight="1"

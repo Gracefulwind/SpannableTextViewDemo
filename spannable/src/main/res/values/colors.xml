@@ -3,4 +3,6 @@
 
     <color name="message_list_item_background_unread">#ff274172</color>
     <color name="message_list_item_background_unread1">#ffFF0000</color>
+
+    <color name="color_default_link_text">#60a8ee</color>
 </resources>
