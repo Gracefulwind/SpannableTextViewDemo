@@ -2,6 +2,13 @@ apply plugin: 'com.android.library'
 //apply plugin: 'com.novoda.bintray-release'
 apply plugin: "guru.stefma.bintrayrelease"
 
+def getVersionCode(){
+    return 102
+}
+
+def getVersionName(){
+    return "1.0.2"
+}
 android {
     compileSdkVersion 27
 
@@ -10,8 +17,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode getVersionCode()
+        versionName getVersionName()
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -53,7 +60,10 @@ tasks.withType(Javadoc) {
     }
 }
 
-version = "1.0.1"
+//def version_name(){
+//    return versionName
+//}
+version = getVersionName()
 group = "com.gracefulwind"
 publish {
     userOrg = 'gracefulwind'

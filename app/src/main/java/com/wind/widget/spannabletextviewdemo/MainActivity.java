@@ -113,13 +113,21 @@ public class MainActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.am_btn_fun2:
+                //测试最大行数
 //                amStvContent.setExpandLines(2);
+                //测试展开/收缩
 //                amStvContent.setCanExpand(true);
+                amStvContent.setTextSize(99);
                 break;
             case R.id.am_btn_fun3:
+                //测试展开/收缩
 //                amStvContent.setCanExpand(false);
+                //测试最大行数
 //                amStvContent.setExpandLines(3);
-                amStvContent.setLinkColor(Color.parseColor("#FF0000"));
+                //测试超链接变色
+//                amStvContent.setLinkColor(Color.parseColor("#FF0000"));
+                //测试文字/右上图标缩放
+                amStvContent.setTextSize(getResources().getDimension(R.dimen.dimen_12sp));
                 break;
         }
     }

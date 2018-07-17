@@ -61,6 +61,11 @@ public class SpannableTextView extends FrameLayout{
     private OnClickListener contentListener;
 
     private LinkClickListener linkClickListener;
+    private int xmlHeight;
+    private int xmlWidth;
+    private int xmlMarginLeft;
+    private int xmlMarginTop;
+    private int xmlMarginRight;
 
     public SpannableTextView(Context context) {
         this(context, null);
@@ -99,17 +104,17 @@ public class SpannableTextView extends FrameLayout{
         expand = typedArray.getBoolean(R.styleable.SpannableTextView_expand, false);
         canExpand = typedArray.getBoolean(R.styleable.SpannableTextView_canExpand, true);
         iconSrc = typedArray.getResourceId(R.styleable.SpannableTextView_iconSrc, R.drawable.selector_icon);
-        float xmlHeight = typedArray.getDimension(R.styleable.SpannableTextView_IconHeight, -5);
-        float xmlWidth = typedArray.getDimension(R.styleable.SpannableTextView_IconWidth, -5);
-        float xmlMarginLeft = typedArray.getDimension(R.styleable.SpannableTextView_IconMarginLeft, -5);
-        float xmlMarginTop = typedArray.getDimension(R.styleable.SpannableTextView_IconMarginTop, -5);
-        float xmlMarginRight = typedArray.getDimension(R.styleable.SpannableTextView_IconMarginRight, -5);
+        xmlHeight = typedArray.getLayoutDimension(R.styleable.SpannableTextView_IconHeight, -5);
+        xmlWidth = typedArray.getLayoutDimension(R.styleable.SpannableTextView_IconWidth, -5);
+        xmlMarginLeft = typedArray.getLayoutDimension(R.styleable.SpannableTextView_IconMarginLeft, -5);
+        xmlMarginTop = typedArray.getLayoutDimension(R.styleable.SpannableTextView_IconMarginTop, -5);
+        xmlMarginRight = typedArray.getLayoutDimension(R.styleable.SpannableTextView_IconMarginRight, -5);
         typedArray.recycle();
         //=====
         //==设置右上图标====
         setIcon(iconSrc);
         //==设置宽高==
-        setIconLayout(context, xmlHeight, xmlWidth, xmlMarginLeft, xmlMarginTop, xmlMarginRight);
+        setIconLayout();
         //设置可点击文本
         setContextText();
         initListener();
@@ -174,6 +179,17 @@ public class SpannableTextView extends FrameLayout{
         tvContent.invalidate();
     }
 
+    /**
+     *
+     * setTextSize的默认单位是SP，但是我们代码中获取到的宽高等值都是(float)px
+     *
+     * */
+    public void setTextSize(float textSize){
+        this.textSize = textSize;
+        tvContent.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+        setIconLayout();
+    }
+
 //    ClickableSpan clickableSpan = new ClickableSpan() {
 //        @Override
 //        public void updateDrawState(TextPaint ds) {
@@ -212,7 +228,7 @@ public class SpannableTextView extends FrameLayout{
      * MATCH_PARENT和WRAP_CONTENT强烈不推荐。。。
      *
      * */
-    private void setIconLayout(Context context, float xmlHeight, float xmlWidth, float xmlMarginLeft, float xmlMarginTop, float xmlMarginRight) {
+    private void setIconLayout() {
         //图标倍率，让图标随着文字大小适应
 //        LinearLayout.LayoutParams.MATCH_PARENT = -1
 //        LinearLayout.LayoutParams.WRAP_CONTENT = -2
@@ -224,11 +240,11 @@ public class SpannableTextView extends FrameLayout{
             }else if(LayoutParams.WRAP_CONTENT == xmlHeight) {
                 layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
             }else {
-                float defaultHeight = context.getResources().getDimension(R.dimen.dimen_6dp);
+                float defaultHeight = mContext.getResources().getDimension(R.dimen.dimen_6dp);
                 layoutParams.height = (int) (rate * defaultHeight);
             }
         }else {
-            layoutParams.height = (int) xmlHeight;
+            layoutParams.height = xmlHeight;
         }
         if(xmlWidth < 0){
             if(LayoutParams.MATCH_PARENT == xmlWidth){
@@ -236,29 +252,29 @@ public class SpannableTextView extends FrameLayout{
             }else if(LayoutParams.WRAP_CONTENT == xmlWidth) {
                 layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT;
             }else {
-                float defaultWidth = context.getResources().getDimension(R.dimen.dimen_12dp);
+                float defaultWidth = mContext.getResources().getDimension(R.dimen.dimen_12dp);
                 layoutParams.width = (int) (rate * defaultWidth);
             }
         }else {
-            layoutParams.height = (int) xmlWidth;
+            layoutParams.height =  xmlWidth;
         }
         if(xmlMarginLeft < 0){
-            float defaultMarginLeft = context.getResources().getDimension(R.dimen.dimen_0dp);
+            float defaultMarginLeft = mContext.getResources().getDimension(R.dimen.dimen_0dp);
             layoutParams.leftMargin = (int) (rate * defaultMarginLeft);
         }else {
-            layoutParams.leftMargin = (int) xmlMarginLeft;
+            layoutParams.leftMargin = xmlMarginLeft;
         }
         if(xmlMarginTop < 0){
-            float defaultMarginTop = context.getResources().getDimension(R.dimen.dimen_4dp);
+            float defaultMarginTop = mContext.getResources().getDimension(R.dimen.dimen_4dp);
             layoutParams.topMargin = (int) (rate * defaultMarginTop);
         }else {
-            layoutParams.topMargin = (int) xmlMarginTop;
+            layoutParams.topMargin = xmlMarginTop;
         }
         if(xmlMarginRight < 0){
-            float defaultMarginRight = context.getResources().getDimension(R.dimen.dimen_3dp);
+            float defaultMarginRight = mContext.getResources().getDimension(R.dimen.dimen_3dp);
             layoutParams.rightMargin = (int) (rate * defaultMarginRight);
         }else {
-            layoutParams.rightMargin = (int) xmlMarginRight;
+            layoutParams.rightMargin = xmlMarginRight;
         }
         ivExpandIcon.setLayoutParams(layoutParams);
     }
